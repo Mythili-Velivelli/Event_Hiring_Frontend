@@ -53,7 +53,6 @@ export default function StepFour({ formData, onBack }) {
                 <p><b>Event Type:</b> {formData.eventType}</p>
                 <p><b>Date:</b> {formatDate(formData.date)}</p>
                 <p><b>Location:</b> {formData.location}</p>
-                {formData.venue && <p><b>Venue:</b> {formData.venue}</p>}
             </div>
 
             {/* Hire Type */}
