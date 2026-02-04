@@ -15,7 +15,7 @@ export default function StepFour({ formData, onBack }) {
     const handleSubmit = async () => {
         setLoading(true)
         try {
-            const res = await fetch("http://localhost:5000/requirements", {
+            const res = await fetch("https://event-hiring-backend.onrender.com/requirements", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
