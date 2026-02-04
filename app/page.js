@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="w-md mx-auto bg-blue-50 p-6 border rounded-xl">
+      <div className="w-md mx-auto bg-green-50 p-6 border rounded-xl">
       {step === 1 && (
         <StepOne
           formData={formData}
