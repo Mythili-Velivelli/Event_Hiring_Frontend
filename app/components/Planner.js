@@ -5,35 +5,15 @@ const predefinedPlannerTasks = [
 ];
 
 export default function Planner({ formData, setFormData }) {
-
   const isOtherTask =
-    formData.plannerTask === "" ||
+    formData.plannerTask === "Other" ||
     (formData.plannerTask &&
       !predefinedPlannerTasks.includes(formData.plannerTask));
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    // Special handling for plannerTask select
-    if (name === "plannerTask") {
-      if (value === "Other") {
-        setFormData((prev) => ({
-          ...prev,
-          plannerTask: ""
-        }));
-      } else {
-        setFormData((prev) => ({
-          ...prev,
-          plannerTask: value
-        }));
-      }
-      return;
-    }
-
-    // Generic handler
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [e.target.name]: e.target.value
     }));
   };
 
@@ -66,9 +46,8 @@ export default function Planner({ formData, setFormData }) {
         What help do you need?
         <select
           name="plannerTask"
-          defaultValue=""
           className="w-full border p-2 mt-1 rounded-md"
-          value={isOtherTask ? "Other" : formData.plannerTask}
+          value={formData.plannerTask || ""}
           onChange={handleChange}
           required
         >
@@ -86,7 +65,7 @@ export default function Planner({ formData, setFormData }) {
         </select>
       </label>
 
-      {/* Other planner task */}
+      {/* Custom planner task */}
       {isOtherTask && (
         <label className="block mb-3 text-md font-medium mt-3">
           Enter planner task:
@@ -95,7 +74,11 @@ export default function Planner({ formData, setFormData }) {
             name="plannerTask"
             placeholder="Eg: Booking the venue"
             className="w-full border p-2 mt-1 rounded-md"
-            value={formData.plannerTask}
+            value={
+              formData.plannerTask === "Other"
+                ? ""
+                : formData.plannerTask
+            }
             onChange={handleChange}
             required
           />

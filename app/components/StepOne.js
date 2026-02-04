@@ -61,7 +61,7 @@ export default function StepOne({ formData, setFormData, onNext }) {
         </select>
       </label>
 
-      {/* Other Event Type */}
+      {/* Custom Event Type */}
       {isOther && (
         <label className="block mb-3 text-md font-medium mt-3">
           Enter event type:

@@ -13,11 +13,11 @@ export default function StepTwo({
     onNext();
   };
 
-  const handleChange=(e)=>{
-       setFormData((prev) => ({
-              ...prev,
-              hireType: e.target.value
-            }))
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      hireType: e.target.value
+    }))
   }
 
   return (

@@ -6,35 +6,15 @@ const predefinedCrewServices = [
 ];
 
 export default function Crew({ formData, setFormData }) {
-
   const isOtherCrewService =
-    formData.crewServiceType === "" ||
+    formData.crewServiceType === "Other" ||
     (formData.crewServiceType &&
       !predefinedCrewServices.includes(formData.crewServiceType));
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    // Special handling for crewServiceType
-    if (name === "crewServiceType") {
-      if (value === "Other") {
-        setFormData((prev) => ({
-          ...prev,
-          crewServiceType: ""
-        }));
-      } else {
-        setFormData((prev) => ({
-          ...prev,
-          crewServiceType: value
-        }));
-      }
-      return;
-    }
-
-    // Generic handler
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [e.target.name]: e.target.value
     }));
   };
 
@@ -50,8 +30,7 @@ export default function Crew({ formData, setFormData }) {
         <select
           className="w-full border px-2 py-2.5 mt-1 rounded-md"
           name="crewServiceType"
-          defaultValue=""
-          value={isOtherCrewService ? "Other" : formData.crewServiceType}
+          value={formData.crewServiceType || ""}
           onChange={handleChange}
           required
         >
@@ -70,7 +49,7 @@ export default function Crew({ formData, setFormData }) {
         </select>
       </label>
 
-      {/* Other Crew Service */}
+      {/* Custom Crew Service */}
       {isOtherCrewService && (
         <label className="block mb-3 text-md font-medium mt-3">
           Enter crew service type:
@@ -79,7 +58,11 @@ export default function Crew({ formData, setFormData }) {
             name="crewServiceType"
             placeholder="Eg: Security, Cleaning, Valet Parking"
             className="w-full border p-2 mt-1 rounded-md"
-            value={formData.crewServiceType}
+            value={
+              formData.crewServiceType === "Other"
+                ? ""
+                : formData.crewServiceType
+            }
             onChange={handleChange}
             required
           />

@@ -7,35 +7,15 @@ const predefinedPerformerTypes = [
 ];
 
 export default function Performer({ formData, setFormData }) {
-
   const isOtherPerformer =
-    formData.performerType === "" ||
+    formData.performerType === "Other" ||
     (formData.performerType &&
       !predefinedPerformerTypes.includes(formData.performerType));
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    // Special handling for performerType select
-    if (name === "performerType") {
-      if (value === "Other") {
-        setFormData((prev) => ({
-          ...prev,
-          performerType: ""
-        }));
-      } else {
-        setFormData((prev) => ({
-          ...prev,
-          performerType: value
-        }));
-      }
-      return;
-    }
-
-    // Generic handler
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [e.target.name]: e.target.value
     }));
   };
 
@@ -50,8 +30,7 @@ export default function Performer({ formData, setFormData }) {
         Performer Type:
         <select
           name="performerType"
-          defaultValue=""
-          value={isOtherPerformer ? "Other" : formData.performerType}
+          value={formData.performerType || ""}
           className="w-full border py-2.5 px-2 mb-3 rounded-md"
           onChange={handleChange}
           required
@@ -66,7 +45,7 @@ export default function Performer({ formData, setFormData }) {
         </select>
       </label>
 
-      {/* Other Performer Type */}
+      {/*Custom Performer Type */}
       {isOtherPerformer && (
         <label className="block mb-3 text-md font-medium">
           Enter performer type:
@@ -75,7 +54,11 @@ export default function Performer({ formData, setFormData }) {
             name="performerType"
             placeholder="Eg: Beatboxer, DJ"
             className="w-full border p-2 mt-1 rounded-md"
-            value={formData.performerType}
+            value={
+              formData.performerType === "Other"
+                ? ""
+                : formData.performerType
+            }
             onChange={handleChange}
             required
           />
