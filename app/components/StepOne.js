@@ -26,7 +26,6 @@ export default function StepOne({ formData, setFormData, onNext }) {
           value={formData.eventName}
           onChange={handleChange}
           className="w-full border p-2 mt-1 rounded-md"
-          required
         />
       </label>
 

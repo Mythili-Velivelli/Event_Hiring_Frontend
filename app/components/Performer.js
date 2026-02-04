@@ -21,7 +21,7 @@ export default function Performer({ formData, setFormData }) {
                     <option value="Live Singer">Live Singer</option>
                     <option value="Stand-up Comedian">Stand-up Comedian</option>
                     <option value="Classical Dancer">Classical Dancer</option>
-                    <option value="Instrumentalist"></option>
+                    <option value="Instrumentalist">Instrumentalist</option>
                     <option value="Other">Other</option>
                 </select>
                 {formData.performerType === "Other" && (
