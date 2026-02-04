@@ -2,14 +2,14 @@ import { useState } from "react"
 export default function StepFour({ formData, onBack }) {
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
-     
-  const formatDate = (dateStr) => {
-  const [year, month, day] = dateStr.split("-")
-  const monthName = new Date(year, month - 1).toLocaleString("en-IN", {
-    month: "long"
-  })
-  return `${day} ${monthName} ${year}`
-}
+
+    const formatDate = (dateStr) => {
+        const [year, month, day] = dateStr.split("-")
+        const monthName = new Date(year, month - 1).toLocaleString("en-IN", {
+            month: "long"
+        })
+        return `${day} ${monthName} ${year}`
+    }
 
 
     const handleSubmit = async () => {
@@ -33,7 +33,7 @@ export default function StepFour({ formData, onBack }) {
         finally {
             setLoading(false)
         }
-        
+
     }
     if (success) {
         return (
@@ -47,7 +47,7 @@ export default function StepFour({ formData, onBack }) {
         <div className="text-[1.1rem]">
             <h2 className="text-xxl text-center font-bold mb-3">Review the Details</h2>
             {/* Event Details */}
-            
+
             <div className="mb-3">
                 <p><b>Event Name:</b> {formData.eventName}</p>
                 <p><b>Event Type:</b> {formData.eventType}</p>
