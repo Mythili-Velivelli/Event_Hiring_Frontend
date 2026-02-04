@@ -1,8 +1,42 @@
+const predefinedEventTypes = [
+  "Birthday",
+  "Wedding",
+  "Family Get-Together",
+  "Retirement Ceremony"
+];
+
 export default function StepOne({ formData, setFormData, onNext }) {
+
+  // derive whether this is "Other" from stored value
+  const isOther =
+  formData.eventType === "" ||
+  !predefinedEventTypes.includes(formData.eventType);
+
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Special handling ONLY for eventType select
+    if (name === "eventType") {
+      if (value === "Other") {
+        // Switch to custom input mode
+        setFormData((prev) => ({
+          ...prev,
+          eventType: ""
+        }));
+      } else {
+        // Normal predefined value
+        setFormData((prev) => ({
+          ...prev,
+          eventType: value
+        }));
+      }
+      return;
+    }
+
+    // Generic handler (date, location, name, and custom typing)
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value
     }));
   };
 
@@ -12,11 +46,10 @@ export default function StepOne({ formData, setFormData, onNext }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      // className="w-md mx-auto p-6 border rounded-xl"
-    >
-      <h2 className="text-xl font-bold mb-4 text-center">Event Details</h2>
+    <form onSubmit={handleSubmit}>
+      <h2 className="text-xl font-bold mb-4 text-center">
+        Event Details
+      </h2>
 
       {/* Event Name */}
       <label className="block mb-3 text-md font-medium">
@@ -34,33 +67,36 @@ export default function StepOne({ formData, setFormData, onNext }) {
         Event Type:
         <select
           name="eventType"
-          value={formData.eventType}
+          defaultValue=""
+          value={isOther ? "Other" : formData.eventType}
           onChange={handleChange}
-          className="w-full border px-2 py-2.5 mt-1  rounded-md"
+          className="w-full border px-2 py-2.5 mt-1 rounded-md"
           required
         >
           <option value="" disabled>select</option>
           <option value="Birthday">Birthday Party</option>
           <option value="Wedding">Wedding</option>
-          <option value="Wedding Anniversary">Anniversary Celebration</option>
+          <option value="Family Get-Together">Family Get-Together</option>
           <option value="Retirement Ceremony">Retirement Ceremony</option>
           <option value="Other">Other</option>
         </select>
-        {formData.eventType === "Other" && (
-          <label className="block mb-3 text-md font-medium mt-3">
-            Enter event type:
-            <input
-              type="text"
-              name="customEventType"
-              placeholder="Eg:Welcome Party, Farewell Party"
-              className="w-full border p-2 mt-1 rounded-md"
-              onChange={handleChange}
-              required
-            />
-          </label>
-        )}
-
       </label>
+
+      {/* Other Event Type Input */}
+      {isOther && (
+        <label className="block mb-3 text-md font-medium mt-3">
+          Enter event type:
+          <input
+            type="text"
+            name="eventType"
+            value={formData.eventType}
+            onChange={handleChange}
+            placeholder="Eg: Welcome Party, Farewell Party"
+            className="w-full border p-2 mt-1 rounded-md"
+            required
+          />
+        </label>
+      )}
 
       {/* Date */}
       <label className="block mb-3 text-md font-medium">
@@ -86,6 +122,7 @@ export default function StepOne({ formData, setFormData, onNext }) {
           required
         />
       </label>
+
       <div className="flex justify-end">
         <button
           type="submit"
